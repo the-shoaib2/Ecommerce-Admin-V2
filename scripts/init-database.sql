@@ -1,0 +1,156 @@
+-- Initialize MongoDB collections (SQL syntax for reference)
+-- In production, use MongoDB commands or ODM migrations
+
+-- Products Collection Schema
+-- {
+--   _id: ObjectId,
+--   name: String,
+--   description: String,
+--   price: Number,
+--   salePrice: Number,
+--   category: String,
+--   sku: String,
+--   stock: Number,
+--   status: String, // 'active', 'inactive', 'draft'
+--   images: [String],
+--   tags: [String],
+--   weight: Number,
+--   dimensions: String,
+--   seoTitle: String,
+--   seoDescription: String,
+--   featured: Boolean,
+--   onSale: Boolean,
+--   sales: Number,
+--   rating: Number,
+--   reviews: Number,
+--   createdAt: Date,
+--   updatedAt: Date
+-- }
+
+-- Orders Collection Schema
+-- {
+--   _id: ObjectId,
+--   orderId: String,
+--   customer: {
+--     name: String,
+--     email: String,
+--     phone: String,
+--     address: String
+--   },
+--   items: [{
+--     productId: ObjectId,
+--     name: String,
+--     price: Number,
+--     quantity: Number,
+--     total: Number
+--   }],
+--   subtotal: Number,
+--   tax: Number,
+--   shipping: Number,
+--   total: Number,
+--   status: String, // 'pending', 'processing', 'shipped', 'completed', 'cancelled'
+--   paymentStatus: String, // 'pending', 'paid', 'failed', 'refunded'
+--   shippingAddress: String,
+--   billingAddress: String,
+--   notes: String,
+--   createdAt: Date,
+--   updatedAt: Date
+-- }
+
+-- Customers Collection Schema
+-- {
+--   _id: ObjectId,
+--   name: String,
+--   email: String,
+--   phone: String,
+--   address: String,
+--   orders: Number,
+--   totalSpent: Number,
+--   status: String, // 'active', 'inactive', 'vip', 'new'
+--   joinedAt: Date,
+--   lastOrderAt: Date,
+--   preferences: {
+--     newsletter: Boolean,
+--     sms: Boolean,
+--     emailOffers: Boolean
+--   },
+--   createdAt: Date,
+--   updatedAt: Date
+-- }
+
+-- Categories Collection Schema
+-- {
+--   _id: ObjectId,
+--   name: String,
+--   description: String,
+--   slug: String,
+--   products: Number,
+--   status: String, // 'active', 'inactive'
+--   parentId: ObjectId,
+--   image: String,
+--   seoTitle: String,
+--   seoDescription: String,
+--   createdAt: Date,
+--   updatedAt: Date
+-- }
+
+-- Users Collection Schema (Admin Users)
+-- {
+--   _id: ObjectId,
+--   username: String,
+--   email: String,
+--   password: String, // hashed
+--   role: String, // 'admin', 'manager', 'staff'
+--   permissions: [String],
+--   profile: {
+--     firstName: String,
+--     lastName: String,
+--     avatar: String,
+--     phone: String
+--   },
+--   lastLogin: Date,
+--   isActive: Boolean,
+--   createdAt: Date,
+--   updatedAt: Date
+-- }
+
+-- Analytics Collection Schema
+-- {
+--   _id: ObjectId,
+--   date: Date,
+--   metrics: {
+--     revenue: Number,
+--     orders: Number,
+--     customers: Number,
+--     products: Number,
+--     conversionRate: Number,
+--     avgOrderValue: Number,
+--     returnRate: Number,
+--     customerSatisfaction: Number
+--   },
+--   createdAt: Date
+-- }
+
+-- Indexes for better performance
+-- db.products.createIndex({ "name": "text", "description": "text" })
+-- db.products.createIndex({ "category": 1 })
+-- db.products.createIndex({ "status": 1 })
+-- db.products.createIndex({ "sku": 1 }, { unique: true })
+-- db.products.createIndex({ "createdAt": -1 })
+
+-- db.orders.createIndex({ "orderId": 1 }, { unique: true })
+-- db.orders.createIndex({ "customer.email": 1 })
+-- db.orders.createIndex({ "status": 1 })
+-- db.orders.createIndex({ "createdAt": -1 })
+
+-- db.customers.createIndex({ "email": 1 }, { unique: true })
+-- db.customers.createIndex({ "status": 1 })
+-- db.customers.createIndex({ "joinedAt": -1 })
+
+-- db.categories.createIndex({ "slug": 1 }, { unique: true })
+-- db.categories.createIndex({ "status": 1 })
+
+-- db.users.createIndex({ "email": 1 }, { unique: true })
+-- db.users.createIndex({ "username": 1 }, { unique: true })
+
+-- db.analytics.createIndex({ "date": -1 })
